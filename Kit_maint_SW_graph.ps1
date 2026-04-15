@@ -1,5 +1,4 @@
-﻿#### Chargement Windows Forms ####
-Add-Type -AssemblyName System.Windows.Forms
+﻿Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 $quitbackcolor = 'LightSalmon'
 $textwhite = [System.Drawing.Color]::White
@@ -103,7 +102,7 @@ function scan{
 
             $form2 = New-Object System.Windows.Forms.Form
             $form2.Text = "Menu des scans"
-            $form2.Size = New-Object System.Drawing.Size(300, 270)
+            $form2.Size = New-Object System.Drawing.Size(335, 450)
             $form2.StartPosition = "CenterScreen"
             $form2.BackColor = $backred
             $form2.ForeColor = $textwhite
@@ -111,44 +110,66 @@ function scan{
             $buttona = New-Object System.Windows.Forms.Button
             $buttona.Text = "sfc /scannow"
             $buttona.Location = New-Object System.Drawing.Point(10, 10)
-            $buttona.Size = New-Object System.Drawing.Size(250, 30)
+            $buttona.Size = New-Object System.Drawing.Size(300, 30)
             $buttona.Add_Click({
-                Start-Process cmd -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c sfc /scannow && pause"
+                Start-Process C:\windows\system32\cmd.exe -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c sfc /scannow && pause"
                 })
                 $form2.Controls.Add($buttona)
 
+            $label = New-Object System.Windows.Forms.Label
+            $label.Location = New-Object System.Drawing.Point(10,50)
+            $label.Size = New-Object System.Drawing.Size(280,20)
+            $label.Text = "Effectuer controle du magasin :"
             $form2.Controls.Add($label)
             $buttonb = New-Object System.Windows.Forms.Button
             $buttonb.Text = "DISM /Online /Cleanup-image /Scanhealth"
-            $buttonb.Location = New-Object System.Drawing.Point(10, 50)
-            $buttonb.Size = New-Object System.Drawing.Size(250, 30)
+            $buttonb.Location = New-Object System.Drawing.Point(10, 70)
+            $buttonb.Size = New-Object System.Drawing.Size(300, 30)
             $buttonb.Add_Click({
-                Start-Process cmd -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c DISM /Online /Cleanup-image /Scanhealth && pause"
+                Start-Process C:\windows\system32\cmd.exe -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c DISM /Online /Cleanup-image /Scanhealth && pause"
                 })
                 $form2.Controls.Add($buttonb)
 
+            $label = New-Object System.Windows.Forms.Label
+            $label.Location = New-Object System.Drawing.Point(10,110)
+            $label.Size = New-Object System.Drawing.Size(280,20)
+            $label.Text = "Savoir si le magasin est reparable :"
+            $form2.Controls.Add($label)
+            $buttonc = New-Object System.Windows.Forms.Button
+            $buttonc.Text = "DISM /Online /Cleanup-image /Checkhealth"
+            $buttonc.Location = New-Object System.Drawing.Point(10, 130)
+            $buttonc.Size = New-Object System.Drawing.Size(300, 30)
+            $buttonc.Add_Click({
+                Start-Process C:\windows\system32\cmd.exe -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c DISM /Online /Cleanup-image /Checkhealth && pause"
+                })
+                $form2.Controls.Add($buttonc)
+
+            $label = New-Object System.Windows.Forms.Label
+            $label.Location = New-Object System.Drawing.Point(10,170)
+            $label.Size = New-Object System.Drawing.Size(280,20)
+            $label.Text = "Reparer le magasin :"
             $form2.Controls.Add($label)
             $buttond = New-Object System.Windows.Forms.Button
             $buttond.Text = "DISM /Online /Cleanup-image /Restorehealth"
-            $buttond.Location = New-Object System.Drawing.Point(10, 90)
-            $buttond.Size = New-Object System.Drawing.Size(250, 30)
+            $buttond.Location = New-Object System.Drawing.Point(10, 190)
+            $buttond.Size = New-Object System.Drawing.Size(300, 30)
             $buttond.Add_Click({
-                Start-Process cmd -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c DISM /Online /Cleanup-image /Restorehealth && pause"
+                Start-Process C:\windows\system32\cmd.exe -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c DISM /Online /Cleanup-image /Restorehealth && pause"
                 })
                 $form2.Controls.Add($buttond)
 
             $buttone = New-Object System.Windows.Forms.Button 
             $buttone.Font = New-Object System.Drawing.Font("Lucia console",10,[System.Drawing.FontStyle]::Bold)
-            $buttone.Text = "Personnaliser DISM"
-            $buttone.Location = New-Object System.Drawing.Point(10, 150)
-            $buttone.Size = New-Object System.Drawing.Size(250, 30)
+            $buttone.Text = "Ligne de commande libre"
+            $buttone.Location = New-Object System.Drawing.Point(10, 250)
+            $buttone.Size = New-Object System.Drawing.Size(300, 30)
             $buttone.Add_Click({
 
 #### Fenetre de selection du DISM ####
 
                     $form21 = New-Object System.Windows.Forms.Form
-                    $form21.Text = "Personnaliser DISM"
-                    $form21.Size = New-Object System.Drawing.Size(1200, 650)
+                    $form21.Text = "Selectionner votre DISM"
+                    $form21.Size = New-Object System.Drawing.Size(500, 180)
                     $form21.StartPosition = "CenterScreen"
                     $form21.BackColor = $backred
                     $form21.ForeColor = $textwhite
@@ -172,9 +193,28 @@ function scan{
                     $form21.CancelButton = $cancelButton
                     $form21.Controls.Add($cancelButton)
 
+                    $DISMHelp = New-Object System.Windows.Forms.Button
+                    $DISMHelp.Location = New-Object System.Drawing.Point(300,100)
+                    $DISMHelp.Size = New-Object System.Drawing.Size(75,23)
+                    $DISMHelp.Text = 'Aide DISM'
+                    $DISMHelp.Add_Click({
+
+                                        #### Fenetre d'aide au DISM ####
+
+                                        $form212 = New-Object System.Windows.Forms.Form
+                                        $form212.Text = "Aide au DISM"
+                                        $form212.Size = New-Object System.Drawing.Size(500, 250)
+                                        $form212.StartPosition = "CenterScreen"
+                                        $form212.BackColor = $backred
+                                        $form212.ForeColor = $textwhite
+
                                         $listdism = dism.exe /? | Out-String
+                                        $form212 = New-Object System.Windows.Forms.Form
+                                        $form212.Text = "Aide au DISM"
+                                        $form212.Size = New-Object System.Drawing.Size(700, 700)
+                                        $form212.StartPosition = "CenterScreen"
                                         $Textboxdism = New-Object System.Windows.Forms.Textbox
-                                        $Textboxdism.Location = New-Object System.Drawing.Point(500,20)
+                                        $Textboxdism.Location = New-Object System.Drawing.Point(10,20)
                                         $Textboxdism.Size = New-Object System.Drawing.Size(650, 550)
                                         $Textboxdism.Multiline = $true
                                         $Textboxdism.WordWrap = $false
@@ -182,7 +222,21 @@ function scan{
                                         $Textboxdism.ReadOnly = $true
                                         $Textboxdism.Font = New-Object System.Drawing.Font("Consolas",10)
                                         $Textboxdism.Text = $listdism
-                                        $form21.Controls.Add($Textboxdism)
+                                        $form212.Controls.Add($Textboxdism)
+
+                                        $buttonquit = New-Object System.Windows.Forms.Button
+                                        $buttonquit.Location = New-Object System.Drawing.Point(300,600)
+                                        $buttonquit.Size = New-Object System.Drawing.Size(75,23)
+                                        $buttonquit.Font = New-Object System.Drawing.Font("Arial", 10,[System.Drawing.FontStyle]::Bold)
+                                        $buttonquit.ForeColor = $textblack
+                                        $buttonquit.Text = 'Fermer'
+                                        $buttonquit.Add_Click({
+                                        $form212.Close()
+                                        })
+                                        $form212.Controls.Add($buttonquit)
+                                        $form212.ShowDialog()
+                                        })
+                    $form21.Controls.Add($DISMHelp)
 
                     $labelapp = New-Object System.Windows.Forms.Label
                     $labelapp.Location = New-Object System.Drawing.Point(10,20)
@@ -201,7 +255,7 @@ function scan{
                     if ($result -eq [System.Windows.Forms.DialogResult]::OK)
                     {
                         $actioncmd = $textBox.Text
-                        Start-Process cmd -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c", "$actioncmd && pause"
+                        Start-Process C:\windows\system32\cmd.exe -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c", "$actioncmd && pause"
                     }
                 })
 
@@ -209,7 +263,7 @@ function scan{
 
             $buttonquit = New-Object System.Windows.Forms.Button
             $buttonquit.Text = "Quitter"
-            $buttonquit.Location = New-Object System.Drawing.Point(10, 190)
+            $buttonquit.Location = New-Object System.Drawing.Point(30, 350)
             $buttonquit.Size = New-Object System.Drawing.Size(250, 30)
             $buttonquit.Font = $boldbutton
             $buttonquit.BackColor = $quitbackcolor
@@ -302,7 +356,7 @@ function wintools{
 
     $form71 = New-Object System.Windows.Forms.Form
     $form71.Text = "Outils Windows"
-    $form71.Size = New-Object System.Drawing.Size(600, 440)
+    $form71.Size = New-Object System.Drawing.Size(600, 400)
     $form71.StartPosition = "CenterScreen"
     $form71.BackColor = $backred
     $form71.ForeColor = $textwhite
@@ -353,7 +407,6 @@ function wintools{
         $form72 = New-Object System.Windows.Forms.Form
         $form72.Text = "Filtrage des elements"
         $form72.Size = New-Object System.Drawing.Size(400, 450)
-        $form72.BackColor = $backred
         $form72.StartPosition = "CenterScreen"
 
         $okButton = New-Object System.Windows.Forms.Button
@@ -473,12 +526,13 @@ function wintools{
            
                     $form73 = New-Object System.Windows.Forms.Form
                     $form73.Text = "Resultat recherche"
-                    $form73.Size = New-Object System.Drawing.Size(1920, 1080)
-                    $form73.StartPosition = "Manual"
+                    $form73.Size = New-Object System.Drawing.Size(1200, 900)
+                    $form73.StartPosition = "CenterScreen"
                     $form73.BackColor = $backred
+                    $form73.ForeColor = $textblack
                     $dataGridView = New-Object System.Windows.Forms.DataGridView
                     $dataGridView.Location = New-Object System.Drawing.Point(10,20)
-                    $dataGridView.Size = New-Object System.Drawing.Size(1700, 900)
+                    $dataGridView.Size = New-Object System.Drawing.Size(1150, 800)
                     $dataGridView.ReadOnly = $true
                     $dataGridView.AllowUserToAddRows = $false
                     $dataGridView.AllowUserToDeleteRows = $false
@@ -492,7 +546,7 @@ function wintools{
 
                     $buttonquit = New-Object System.Windows.Forms.Button
                     $buttonquit.Text = "Quitter"
-                    $buttonquit.Location = New-Object System.Drawing.Point(1750, 20)
+                    $buttonquit.Location = New-Object System.Drawing.Point(500, 830)
                     $buttonquit.Size = New-Object System.Drawing.Size(150, 30)
                     $buttonquit.Font = $boldbutton
                     $buttonquit.BackColor = $quitbackcolor
@@ -522,7 +576,7 @@ function wintools{
     $button74.Location = New-Object System.Drawing.Point(390, 90)
     $button74.Size = New-Object System.Drawing.Size(175, 30)
     $button74.Add_Click({
-    Start-Process cmd -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c net stop spooler && net start spooler && timeout /t 5"
+    Start-Process C:\windows\system32\cmd.exe -Verb RunAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList "/c net stop spooler && net start spooler && timeout /t 5"
     })
     $form71.Controls.Add($button74)
 
@@ -582,22 +636,10 @@ function wintools{
     })
     $form71.Controls.Add($button79)
 
-#### Compmgmt ####
-
-    $buttoncm = New-Object System.Windows.Forms.Button
-    $buttoncm.Text = "Gestion ordinateur"
-    $buttoncm.Location = New-Object System.Drawing.Point(10, 210)
-    $buttoncm.Size = New-Object System.Drawing.Size(175, 30)
-    $buttoncm.Add_Click({
-    compmgmt.msc
-    })
-    $form71.Controls.Add($buttoncm)
-
-
 #### info poste ####
 
     $labelinfo = New-Object System.Windows.Forms.Label
-    $labelinfo.Location = New-Object System.Drawing.Point(230,260)
+    $labelinfo.Location = New-Object System.Drawing.Point(230,220)
     $labelinfo.font = $boldbutton
     $labelinfo.Size = New-Object System.Drawing.Size(150,20)
     $labelinfo.Text = "Information poste :"
@@ -605,36 +647,37 @@ function wintools{
 
     $button31 = New-Object System.Windows.Forms.Button
     $button31.Text = "Rapport batterie"
-    $button31.Location = New-Object System.Drawing.Point(10, 290)
+    $button31.Location = New-Object System.Drawing.Point(10, 250)
     $button31.Size = New-Object System.Drawing.Size(175, 30)
     $button31.Add_Click({
-    Start-Process cmd -Verb runAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList '/c powercfg /batteryreport && "%userprofile%\battery-report.html"'
+    Start-Process C:\windows\system32\cmd.exe -Verb runAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList '/c powercfg /batteryreport && "%userprofile%\battery-report.html"'
     })
     $form71.Controls.Add($button31)
 
     $button32 = New-Object System.Windows.Forms.Button
     $button32.Text = "Numéro de série"
-    $button32.Location = New-Object System.Drawing.Point(200, 290)
+    $button32.Location = New-Object System.Drawing.Point(200, 250)
     $button32.Size = New-Object System.Drawing.Size(175, 30)
     $button32.Add_Click({
-    Start-Process cmd -Verb runAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList '/c wmic bios get serialnumber && pause'
+    Start-Process C:\windows\system32\cmd.exe -Verb runAs -WorkingDirectory "$env:USERPROFILE" -ArgumentList '/c wmic bios get serialnumber && pause'
     })
     $form71.Controls.Add($button32)
 
     $button33 = New-Object System.Windows.Forms.Button
     $button33.Text = "Information système"
-    $button33.Location = New-Object System.Drawing.Point(390, 290)
+    $button33.Location = New-Object System.Drawing.Point(390, 250)
     $button33.Size = New-Object System.Drawing.Size(175, 30)
     $button33.Add_Click({
     msinfo32
     })
     $form71.Controls.Add($button33)
 
+
 #### Sortie ####
 
     $buttonquit = New-Object System.Windows.Forms.Button
     $buttonquit.Text = "Quitter"
-    $buttonquit.Location = New-Object System.Drawing.Point(210, 340)
+    $buttonquit.Location = New-Object System.Drawing.Point(210, 300)
     $buttonquit.Size = New-Object System.Drawing.Size(150, 30)
     $buttonquit.Font = $boldbutton
     $buttonquit.BackColor = $quitbackcolor
@@ -649,15 +692,36 @@ function app{
 
     $form8 = New-Object System.Windows.Forms.Form
     $form8.Text = "Menu des Applications"
-    $form8.Size = New-Object System.Drawing.Size(300, 380)
+    $form8.Size = New-Object System.Drawing.Size(540, 280)
     $form8.StartPosition = "CenterScreen"
     $form8.BackColor = $backred
     $form8.ForeColor = $textwhite
 
+    $labelsupp = New-Object System.Windows.Forms.Label
+    $labelsupp.Location = New-Object System.Drawing.Point(10,20)
+    $labelsupp.font = $boldbutton
+    $labelsupp.Size = New-Object System.Drawing.Size(120,20)
+    $labelsupp.Text = "Support :"
+    $form8.Controls.Add($labelsupp)
+
+    $labelanal = New-Object System.Windows.Forms.Label
+    $labelanal.Location = New-Object System.Drawing.Point(180,20)
+    $labelanal.font = $boldbutton
+    $labelanal.Size = New-Object System.Drawing.Size(120,20)
+    $labelanal.Text = "Analyse :"
+    $form8.Controls.Add($labelanal)
+
+    $labelutil = New-Object System.Windows.Forms.Label
+    $labelutil.Location = New-Object System.Drawing.Point(360,20)
+    $labelutil.font = $boldbutton
+    $labelutil.Size = New-Object System.Drawing.Size(120,20)
+    $labelutil.Text = "Utilitaires :"
+    $form8.Controls.Add($labelutil)
+
     $button81 = New-Object System.Windows.Forms.Button
     $button81.Text = "Intel support assistant"
-    $button81.Location = New-Object System.Drawing.Point(10, 10)
-    $button81.Size = New-Object System.Drawing.Size(250, 30)
+    $button81.Location = New-Object System.Drawing.Point(10, 50)
+    $button81.Size = New-Object System.Drawing.Size(150, 30)
     $button81.Add_Click({
         Start-Process https://dsadata.intel.com/installer
     })
@@ -665,8 +729,8 @@ function app{
 
     $button82 = New-Object System.Windows.Forms.Button
     $button82.Text = "Malwarebytes"
-    $button82.Location = New-Object System.Drawing.Point(10, 50)
-    $button82.Size = New-Object System.Drawing.Size(250, 30)
+    $button82.Location = New-Object System.Drawing.Point(180, 50)
+    $button82.Size = New-Object System.Drawing.Size(150, 30)
     $button82.Add_Click({
         Start-Process "https://www.malwarebytes.com/fr/mwb-download/thankyou"
     })
@@ -674,8 +738,8 @@ function app{
 
     $button83 = New-Object System.Windows.Forms.Button
     $button83.Text = "ADWCleaner"
-    $button83.Location = New-Object System.Drawing.Point(10, 90)
-    $button83.Size = New-Object System.Drawing.Size(250, 30)
+    $button83.Location = New-Object System.Drawing.Point(180, 90)
+    $button83.Size = New-Object System.Drawing.Size(150, 30)
     $button83.Add_Click({
         Start-Process https://adwcleaner.malwarebytes.com/adwcleaner?channel=release
     })
@@ -683,8 +747,8 @@ function app{
 
     $button84 = New-Object System.Windows.Forms.Button
     $button84.Text = "Dell Power Manager"
-    $button84.Location = New-Object System.Drawing.Point(10, 130)
-    $button84.Size = New-Object System.Drawing.Size(250, 30)
+    $button84.Location = New-Object System.Drawing.Point(10, 90)
+    $button84.Size = New-Object System.Drawing.Size(150, 30)
     $button84.Add_Click({
         Start-Process https://dl.dell.com/FOLDER07383273M/5/Dell-Power-Manager-Service_GD7J6_WIN64_3.9.0_A00_03.EXE
     })
@@ -692,8 +756,8 @@ function app{
 
     $button85 = New-Object System.Windows.Forms.Button
     $button85.Text = "Dell support assist"
-    $button85.Location = New-Object System.Drawing.Point(10, 170)
-    $button85.Size = New-Object System.Drawing.Size(250, 30)
+    $button85.Location = New-Object System.Drawing.Point(10, 130)
+    $button85.Size = New-Object System.Drawing.Size(150, 30)
     $button85.Add_Click({
         Start-Process https://downloads.dell.com/serviceability/catalog/SupportAssistinstaller.exe
     })
@@ -701,16 +765,25 @@ function app{
 
     $button86 = New-Object System.Windows.Forms.Button
     $button86.Text = "Treesize (portable)"
-    $button86.Location = New-Object System.Drawing.Point(10, 210)
-    $button86.Size = New-Object System.Drawing.Size(250, 30)
+    $button86.Location = New-Object System.Drawing.Point(360, 50)
+    $button86.Size = New-Object System.Drawing.Size(150, 30)
     $button86.Add_Click({
         Start-Process https://customers.jam-software.de/downloadTrial.php?article_no=101
     })
     $form8.Controls.Add($button86)
 
+    $button87 = New-Object System.Windows.Forms.Button
+    $button87.Text = "Ip Advanced Scan"
+    $button87.Location = New-Object System.Drawing.Point(360, 90)
+    $button87.Size = New-Object System.Drawing.Size(150, 30)
+    $button87.Add_Click({
+        Start-Process https://download.advanced-ip-scanner.com/download/files/Advanced_IP_Scanner_2.5.4594.1.exe
+    })
+    $form8.Controls.Add($button87)
+
     $buttonquit = New-Object System.Windows.Forms.Button
     $buttonquit.Text = "Quitter"
-    $buttonquit.Location = New-Object System.Drawing.Point(60, 280)
+    $buttonquit.Location = New-Object System.Drawing.Point(180, 200)
     $buttonquit.Size = New-Object System.Drawing.Size(150, 30)
     $buttonquit.Font = $boldbutton
     $buttonquit.BackColor = $quitbackcolor
@@ -729,7 +802,7 @@ function app{
 function Show-MenuForm {
     $form = New-Object System.Windows.Forms.Form
     $form.Text = "Menu des Actions"
-    $form.Size = New-Object System.Drawing.Size(300, 300)
+    $form.Size = New-Object System.Drawing.Size(300, 500)
     $form.BackColor = $backred
     $form.ForeColor = $textwhite
     $form.StartPosition = "CenterScreen"
@@ -789,11 +862,64 @@ function Show-MenuForm {
     })
     $form.Controls.Add($button5)
 
+#### batt ####
+powercfg /batteryreport /output "$env:USERPROFILE/battery-report.html"
+$r1 = get-content "$env:USERPROFILE/battery-report.html" | Where-Object { $_ -match "FULL CHARGE CAPACITY" }
+$r2 = get-content "$env:USERPROFILE/battery-report.html" | Where-Object { $_ -match "DESIGN CAPACITY" }
+$extract = [regex]::Matches(@($r1; $r2), "\d{2}\s{1}\d{3}") | ForEach-Object {$_.Value}
+$treatment = $extract -replace '\s',''
+$batt = ([int]$treatment.Item(0)/[int]$treatment.Item(1))*100
+
+    $labelwv = New-Object System.Windows.Forms.label
+    $labelwv.Location = New-Object System.Drawing.Point(10,340)
+    $labelwv.Size = New-Object System.Drawing.Size(250,20)
+    $labelwv.Text = "Santé batterie : " + [math]::round($batt,2) + " %"
+    $form.Controls.Add($labelwv)
+
+
+
+#### winver ####
+
+$winver = Get-ItemPropertyvalue "HKLM:\Software\Microsoft\Windows NT\CurrentVersion" -name DisplayVersion
+    $labelwv = New-Object System.Windows.Forms.label
+    $labelwv.Location = New-Object System.Drawing.Point(10,360)
+    $labelwv.Size = New-Object System.Drawing.Size(250,20)
+    $labelwv.Text = "Version Windows : " + $winver
+    $form.Controls.Add($labelwv)
+    
+#### Perma SN bios ####
+
+$snbios = wmic bios get serialnumber
+    $labelsnb = New-Object System.Windows.Forms.Label
+    $labelsnb.Location = New-Object System.Drawing.Point(10,380)
+    $labelsnb.Size = New-Object System.Drawing.Size(250,20)
+    $labelsnb.Text = "SN BIOS : " + $snbios
+    $form.Controls.Add($labelsnb)
+
+#### Perma SN SNR ####
+$snsnr = get-content C:\snr.txt | where-Object { $_ -match "NumeroSerie" }
+
+if ($snsnr){
+    $labelsns = New-Object System.Windows.Forms.Label
+    $labelsns.Location = New-Object System.Drawing.Point(10,400)
+    $labelsns.Size = New-Object System.Drawing.Size(250,20)
+    $labelsns.Text = "SN SNR : " + $snsnr
+    $form.Controls.Add($labelsns)
+}
+else{
+    $labelsns = New-Object System.Windows.Forms.Label
+    $labelsns.Location = New-Object System.Drawing.Point(10,400)
+    $labelsns.Size = New-Object System.Drawing.Size(250,20)
+    $labelsns.Text = "Fichier SNR manquant"
+    $labelsns.ForeColor = "Red"
+    $form.Controls.Add($labelsns)
+}
+
 #### Btn reboot ####
 
     $buttonrbt = New-Object System.Windows.Forms.Button
     $buttonrbt.Text = "Reboot"
-    $buttonrbt.Location = New-Object System.Drawing.Point(200, 220)
+    $buttonrbt.Location = New-Object System.Drawing.Point(200, 420)
     $buttonrbt.Size = New-Object System.Drawing.Size(60, 30)
     $buttonrbt.Font = New-Object System.Drawing.Font("Arial", 10, [System.Drawing.FontStyle]::Bold)
     $buttonrbt.Add_Click({
@@ -844,7 +970,7 @@ function Show-MenuForm {
 
     $buttonquit = New-Object System.Windows.Forms.Button
     $buttonquit.Text = "Quitter"
-    $buttonquit.Location = New-Object System.Drawing.Point(10, 220)
+    $buttonquit.Location = New-Object System.Drawing.Point(10, 420)
     $buttonquit.Size = New-Object System.Drawing.Size(150, 30)
     $buttonquit.BackColor = $quitbackcolor
     $buttonquit.Font = $boldbutton
